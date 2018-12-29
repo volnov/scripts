@@ -5,8 +5,8 @@
 // @description  Improve and scroll last donations
 // @author       Nik
 // @run-at       document-start
-// @match        https://www.donationalerts.com/widget/lastdonations*
-// @match        https://www.donationalerts.ru/widget/lastdonations*
+// @match        https://www.donationalerts.com/widget/lastdonations?alert_type=*
+// @match        https://www.donationalerts.ru/widget/lastdonations?alert_type=*
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js
 // @require      https://cdnjs.cloudflare.com/ajax/libs/arrive/2.4.1/arrive.min.js
 // @grant        unsafeWindow
