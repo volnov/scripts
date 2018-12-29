@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         DonationAlerts Zayavki
-// @namespace    arsenalgrinch
+// @namespace    DonationAlerts
 // @version      0.5
 // @description  Improve and scroll last donations
 // @author       Nik
@@ -176,7 +176,7 @@ $(function () {
     startScroll(container);
     $(container).hover(function() {
         clearInterval(scroller);
-        $(container).stop();
+        $(container).stop(true);
     }, function() {
         startScroll(container);
     });
