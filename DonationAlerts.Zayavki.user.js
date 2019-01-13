@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DonationAlerts Zayavki
 // @namespace    DonationAlerts
-// @version      0.5
+// @version      0.6
 // @description  Improve and scroll last donations
 // @author       Nik
 // @run-at       document-start
@@ -14,7 +14,7 @@
 // ==/UserScript==
 
 var itemClass = '.b-last-events-widget__item',
-    scrollSeconds = 15,
+    scrollSeconds = 20,
     currentOffset,
     container = '.scroll-container',
     scroller;
@@ -129,7 +129,7 @@ function refreshData() {
 function scrollToCurrent(element) {
     currentOffset = $('.current').position().top;
     $('.scroll-container').animate({
-        scrollTop: currentOffset - 3 * $(itemClass).height()
+        scrollTop: currentOffset - 7 * $(itemClass).height()
     }, scrollSeconds * 1000);
 }
 
