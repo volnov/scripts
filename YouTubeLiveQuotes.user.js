@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Live Quotes
 // @namespace    youtubelive
-// @version      0.6
+// @version      0.7
 // @description  Quote random phrase from chat
 // @author       Nik
 // @run-at       document-start
@@ -40,6 +40,7 @@ window.$ = window.jQuery = jQuery.noConflict(true);
 var oldPhrases = [];
 var newPhrases = [];
 var interval;
+var timeout;
 var waitTime = 10 * 60;
 var showTime = 20;
 
@@ -55,12 +56,17 @@ function updateQuote(phrase) {
     var $tlt = $block.find('.tlt');
     $author.text(phrase.author).fadeIn('slow');
     $tlt.find('.text').text(phrase.text);
+
+    if (timeout) {
+        clearTimeout(timeout);
+    }
+
     $tlt.textillate({
         autoStart: false,
         in: {
             effect: 'rollIn',
             callback: function() {
-                setTimeout(function() {
+                timeout = setTimeout(function() {
                     $tlt.textillate('out');
                 }, showTime * 1000);
             }
