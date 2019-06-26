@@ -21,7 +21,7 @@
 
     var css = [
         '.quote-button { position: absolute; top: 10px; left: 30%; width: 30%; padding: 5px 10px; font-size: 16px; z-index: 100; }',
-        '.quote-block { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #262626; color: white; display: none; z-index: 200; font-family: "Alice", serif; letter-spacing: 1px; background-image: url("https://n3tman.github.io/scripts/handmade-paper.png"); }',
+        '.quote-block { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #262626; color: white; display: none; z-index: 200; font-family: "Alice", serif; letter-spacing: 1px; }',
         '.quote-block button { border: 0; padding: 5px; background: transparent; cursor: pointer; }',
         '.quote-block .content { display: flex; flex-direction: column; align-items: center; justify-content: center; height: calc(100% - 70px); padding: 0 20px; overflow: hidden; }',
         '.quote-block .title { text-align: center; font-size: 30px; line-height: 40px; font-style: italic; font-weight: bold; background: linear-gradient(to bottom, #1d1d1d 10%, #353535 70%); color: #fefefe; letter-spacing: 6px; border-bottom: 1px solid #d3d3d37d; padding-bottom: 5px; }',
