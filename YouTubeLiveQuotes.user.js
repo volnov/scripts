@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Live Quotes
 // @namespace    youtubelive
-// @version      0.7
+// @version      0.8
 // @description  Quote random phrase from chat
 // @author       Nik
 // @run-at       document-start
@@ -42,6 +42,7 @@ var newPhrases = [];
 var interval;
 var timeout;
 var waitTime = 10 * 60;
+var count;
 var showTime = 20;
 
 var audioArray = [
@@ -106,7 +107,7 @@ $(function () {
     var $block = $('.quote-block');
 
     $('<button class="quote-button">Цитатник</button>').appendTo('body').click(function () {
-        var count = waitTime;
+        count = waitTime;
         var $counter = $('.quote-counter');
         $block.fadeIn();
         interval = setInterval(function () {
@@ -145,6 +146,7 @@ $(document).arrive('yt-live-chat-text-message-renderer', function() {
     var $this = $(this);
     var author = $this.find('#author-name').text().trim();
     var message = $this.find('#message').text().trim();
-
-    newPhrases.push({author: author, text: message});
+    if (count < 15) {
+        newPhrases.push({author: author, text: message});
+    }
 });
