@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Live Quotes
 // @namespace    youtubelive
-// @version      0.8
+// @version      0.9
 // @description  Quote random phrase from chat
 // @author       Nik
 // @run-at       document-start
