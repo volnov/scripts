@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Live Quotes
 // @namespace    youtubelive
-// @version      0.9
+// @version      1.0
 // @description  Quote random phrase from chat
 // @author       Nik
 // @run-at       document-start
@@ -25,8 +25,9 @@
         '.quote-block button { border: 0; padding: 5px; background: transparent; cursor: pointer; }',
         '.quote-block .content { display: flex; flex-direction: column; align-items: center; justify-content: center; height: calc(100% - 70px); padding: 0 20px; overflow: hidden; }',
         '.quote-block .title { text-align: center; font-size: 30px; line-height: 40px; font-style: italic; font-weight: bold; background: linear-gradient(to bottom, #1d1d1d 10%, #353535 70%); color: #fefefe; letter-spacing: 6px; border-bottom: 1px solid #d3d3d37d; padding-bottom: 5px; }',
-        '.quote-block .author { text-align: center; font-size: 50px; font-weight: bold; padding-bottom: 10px; letter-spacing: 3px; display: none; }',
-        '.quote-block .tlt { text-align: center; font-size: 40px; padding-bottom: 10px; list-style-type: none; }',
+        '.quote-block .author { text-align: center; font-size: 50px; font-weight: bold; padding-bottom: 10px; letter-spacing: 3px; border-bottom: 2px solid rgba(255,255,255,0.3); display: none; background: rgba(126, 70, 15, 0.8) url("https://n3tman.github.io/scripts/handmade-paper.png"); width: 70%; padding: 10px; border-radius: 10px 10px 0 0; }',
+        '.quote-block .tlt { text-align: center; font-size: 40px; padding-bottom: 10px; list-style-type: none; width: 70%; }',
+        '.quote-block .tlt.active { background: rgba(126, 70, 15, 0.8) url("https://n3tman.github.io/scripts/handmade-paper.png"); padding: 10px; border-radius: 0 0 10px 10px; }',
         '.quote-block .text { list-style-type: none; }',
         '.quote-counter { position: absolute; bottom: 3px; right: 10px; font-size: 30px; }',
         '.quote-close { position: absolute; top: 3px; right: 0; font-size: 20px; }',
@@ -57,6 +58,7 @@ function updateQuote(phrase) {
     var $tlt = $block.find('.tlt');
     $author.text(phrase.author).fadeIn('slow');
     $tlt.find('.text').text(phrase.text);
+    $tlt.addClass('active');
 
     if (timeout) {
         clearTimeout(timeout);
@@ -76,6 +78,7 @@ function updateQuote(phrase) {
             effect: 'hinge',
             callback: function() {
                 $author.fadeOut('slow');
+                $tlt.removeClass('active');
             }
         }
     });
@@ -146,7 +149,7 @@ $(document).arrive('yt-live-chat-text-message-renderer', function() {
     var $this = $(this);
     var author = $this.find('#author-name').text().trim();
     var message = $this.find('#message').text().trim();
-    if (count < 15) {
+    if (count < 30) {
         newPhrases.push({author: author, text: message});
     }
 });
