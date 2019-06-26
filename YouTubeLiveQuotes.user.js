@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Live Quotes
 // @namespace    youtubelive
-// @version      1.0
+// @version      1.1
 // @description  Quote random phrase from chat
 // @author       Nik
 // @run-at       document-start
@@ -91,12 +91,7 @@ function getRandomIndex(max) {
 }
 
 function getRandomArrayValue(arr) {
-    var val = arr[getRandomIndex(arr.length)];
-    if (val.text.length > 10 && val.text.split(' ').length > 1) {
-        return val;
-    } else {
-        return getRandomArrayValue(arr);
-    }
+    return arr[getRandomIndex(arr.length)];
 }
 
 $(function () {
@@ -149,7 +144,7 @@ $(document).arrive('yt-live-chat-text-message-renderer', function() {
     var $this = $(this);
     var author = $this.find('#author-name').text().trim();
     var message = $this.find('#message').text().trim();
-    if (count < 30) {
+    if (count < 60 && message.length > 10 && message.split(' ').length > 1) {
         newPhrases.push({author: author, text: message});
     }
 });
