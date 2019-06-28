@@ -32,7 +32,7 @@
         '.quote-block .author { text-align: center; font-size: 50px; font-weight: bold; letter-spacing: 3px; border-bottom: 2px solid rgba(255,255,255,0.3); display: none; background: rgba(126, 70, 15, 0.8) url("https://n3tman.github.io/scripts/handmade-paper.png"); width: 80%; padding: 10px; border-radius: 10px 10px 0 0; }',
         '.quote-block .tlt { text-align: center; font-size: 40px; list-style-type: none; width: 80%; padding: 10px; border-radius: 0 0 10px 10px; background: rgba(126, 70, 15, 0.8) url("https://n3tman.github.io/scripts/handmade-paper.png"); opacity: 0; }',
         '.quote-block .text { list-style-type: none; }',
-        '.quote-counter { font-size: 45px; font-style: italic; background: #0d480f url("https://n3tman.github.io/scripts/handmade-paper.png"); padding: 5px 10px 5px 25px; border-radius: 5px; }',
+        '.quote-counter { font-size: 45px; font-style: italic; background: #0d480f url("https://n3tman.github.io/scripts/handmade-paper.png"); padding: 5px 10px 5px 20px; border-radius: 5px; }',
         '.quote-counter .counter { font-weight: bold; margin-left: 5px; width: 120px; display: inline-block; }',
         '.quote-close { position: absolute; top: 3px; right: 0; font-size: 20px; }',
         '.quote-refresh { position: absolute; top: 3px; left: 0; font-size: 20px; }',
