@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         YouTube Live Quotes
 // @namespace    youtubelive
-// @version      1.6
+// @version      1.7
 // @description  Quote random phrase from chat
 // @author       Nik
 // @run-at       document-start
@@ -49,7 +49,7 @@ window.$ = window.jQuery = jQuery.noConflict(true);
 var waitTime = 10 * 60;
 var showTime = 60;
 var notifyTime = 40;
-var lastMessages = 20;
+var lastMessages = 40;
 
 // ----------------------------------- //
 
@@ -160,7 +160,6 @@ $(function () {
             count--;
 
             if (count < notifyTime && !notified) {
-                phraseArray = [];
                 updateQuote({
                     author: 'Скорей!',
                     text: 'Пиши в чате стрима,<br>чтобы попасть сюда<br>(берется случайное сообщение из последних)'
