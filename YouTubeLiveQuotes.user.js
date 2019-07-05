@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         YouTube Live Quotes
 // @namespace    youtubelive
-// @version      1.7
+// @version      1.8
 // @description  Quote random phrase from chat
 // @author       Nik
 // @run-at       document-start
@@ -49,7 +49,7 @@ window.$ = window.jQuery = jQuery.noConflict(true);
 var waitTime = 10 * 60;
 var showTime = 60;
 var notifyTime = 40;
-var lastMessages = 40;
+var lastMessages = 20;
 
 // ----------------------------------- //
 
@@ -66,6 +66,11 @@ var audioArray = [
 ];
 
 var lampSound = new Audio('https://n3tman.github.io/scripts/lamp.mp3');
+
+audioArray[0].volume = 0.7;
+audioArray[1].volume = 0.7;
+audioArray[2].volume = 0.7;
+lampSound.volume = 0.3;
 
 function updateQuote(phrase, notify) {
     var $block = $('.quote-block');
@@ -139,18 +144,37 @@ function getRandomArrayValue(arr) {
     return lastArray[getRandomIndex(lastArray.length)];
 }
 
+function bindArrive() {
+    document.arrive('yt-live-chat-text-message-renderer', function() {
+        var $this = $(this);
+        var author = $this.find('#author-name').text().trim();
+        var message = $this.find('#message').text().trim();
+        if (author && message.length > 10 && message.split(' ').length > 1) {
+            phraseArray.push({author: author, text: message});
+        }
+    });
+}
+
 $(function () {
     var quoteBlock = '<div class="quote-block"><div class="title">﴾ МИНУТА СЛАВЫ ﴿</div><div class="content"><div class="author"></div>' +
         '<div class="tlt"><ul class="texts"><li class="text"></li></ul></div></div>' +
         '<button class="quote-close" title="Закрыть">❌</button><button class="quote-refresh" title="Обновить">🔄</button>' +
-        '<div class="quote-counter">Цитата через <span class="counter">10:00</span></div></div>'
+        '<div class="quote-counter">Цитата через <span class="counter">10:00</span></div></div>';
     $(quoteBlock).appendTo('body');
+
+    var $topMessages = $('.yt-simple-endpoint.yt-dropdown-menu:eq(0) > .yt-dropdown-menu');
+    var $allMessages = $('.yt-simple-endpoint.yt-dropdown-menu:eq(1) > .yt-dropdown-menu');
+
+    setTimeout(function () {
+        $allMessages.click();
+    }, 500);
 
     $('<link href="https://fonts.googleapis.com/css?family=Alice&display=swap&subset=cyrillic" rel="stylesheet">').appendTo('head');
 
     var $block = $('.quote-block');
 
     $('<button class="quote-button">Цитатник</button>').appendTo('body').click(function () {
+        bindArrive();
         count = waitTime;
         var $counter = $('.quote-counter').find('.counter');
         $block.css('display', 'flex');
@@ -171,6 +195,12 @@ $(function () {
                 count = waitTime;
                 updateQuote(getRandomArrayValue(phraseArray));
                 notified = false;
+                $topMessages.click();
+                document.unbindArrive();
+                setTimeout(function () {
+                    $allMessages.click();
+                    bindArrive();
+                }, 2000);
             }
         }, 1000);
     });
@@ -185,11 +215,4 @@ $(function () {
     $('.quote-refresh').click(function () {
         updateQuote(getRandomArrayValue(phraseArray));
     });
-});
-
-$(document).arrive('yt-live-chat-text-message-renderer', function() {
-    var $this = $(this);
-    var author = $this.find('#author-name').text().trim();
-    var message = $this.find('#message').text().trim();
-    phraseArray.push({author: author, text: message});
 });
