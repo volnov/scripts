@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DonationAlerts Zayavki
 // @namespace    DonationAlerts
-// @version      0.6
+// @version      0.7
 // @description  Improve and scroll last donations
 // @author       Nik
 // @run-at       document-start
@@ -22,16 +22,16 @@ var itemClass = '.b-last-events-widget__item',
 (function() {
     var css = [
         "html, body {",
-        "    font-size: 14px;",
+        "    font-size: 14px; font-family: Arsenal;",
         "}",
         ".message-container, .return-to-top, .action-buttons-container {",
         "    display: none !important;",
         "}",
         ".b-last-events-widget__item--inner {",
-        "    padding: .5rem .5rem .5rem 1rem;",
+        "    padding: .2rem .2rem .2rem 1rem;",
         "}",
         ".b-last-events-widget__item--date {",
-        "    top: .45rem; right: 1em;",
+        "    top: .2rem; right: 1em;",
         "    padding-top: 0; color: #b0b0b0;",
         "}",
         ".b-last-events-widget__item {",
@@ -57,19 +57,19 @@ var itemClass = '.b-last-events-widget__item',
         "    border-radius: 10px 0 0 10px;",
         "}",
         ".lastevents-container .scroll-container {",
-        "    height: calc(100% - 3.5rem);",
+        "    height: calc(100% - 2.5rem);",
         "    overflow-y: scroll;",
         "}",
         ".summary {",
-        "    font-size: 1.5em; color: #b0b0b0;",
+        "    font-size: 1.8rem; letter-spacing: 4px; color: rgba(245, 245, 245, .8); font-weight: bold;",
         "    padding: 0 1rem 0 3.9rem;",
         "    display: flex; align-items: center;",
-        "    height: 3.5rem;",
+        "    height: 2.5rem;",
         "    background: linear-gradient(to bottom, #1d1d1d 10%, #353535 70%);",
         "    border-bottom: 1px solid #6d6d6d;",
         "}",
         ".summary > .value {",
-        "    font-weight: 500; color: white;",
+        "    color: white;",
         "    padding-left: .5rem;",
         "}"
     ].join("\n");
