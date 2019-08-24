@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DonationAlerts Zayavki
 // @namespace    DonationAlerts
-// @version      0.7
+// @version      0.8
 // @description  Improve and scroll last donations
 // @author       Nik
 // @run-at       document-start
@@ -9,8 +9,10 @@
 // @match        https://www.donationalerts.ru/widget/lastdonations?alert_type=*
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js
 // @require      https://cdnjs.cloudflare.com/ajax/libs/arrive/2.4.1/arrive.min.js
+// @resource     customFont https://fonts.googleapis.com/css?family=Arsenal:400,700&display=swap&subset=cyrillic
 // @grant        unsafeWindow
 // @grant        GM_addStyle
+// @grant        GM_getResourceText
 // ==/UserScript==
 
 var itemClass = '.b-last-events-widget__item',
@@ -19,10 +21,13 @@ var itemClass = '.b-last-events-widget__item',
     container = '.scroll-container',
     scroller;
 
+var newCSS = GM_getResourceText('customFont');
+GM_addStyle(newCSS);
+
 (function() {
     var css = [
         "html, body {",
-        "    font-size: 14px; font-family: Arsenal;",
+        "    font-size: 14px; font-family: 'Arsenal', sans-serif;",
         "}",
         ".message-container, .return-to-top, .action-buttons-container {",
         "    display: none !important;",
