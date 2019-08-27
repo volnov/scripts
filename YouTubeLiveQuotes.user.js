@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         YouTube Live Quotes
 // @namespace    youtubelive
-// @version      1.9
+// @version      2.0
 // @description  Quote random phrase from chat
 // @author       Nik
 // @run-at       document-start
@@ -24,18 +24,18 @@
 
     var css = [
         '.quote-button { position: absolute; top: 10px; left: 30%; width: 30%; padding: 5px 10px; font-size: 16px; z-index: 100; }',
-        '.quote-block { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #262626; color: white; display: none; z-index: 200; font-family: "Alice", serif; letter-spacing: 1px; flex-direction: column; align-items: center; }',
-        '.quote-block button { border: 0; padding: 5px; background: transparent; cursor: pointer; font-size: 35px; }',
+        '.quote-block { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: purple; color: white; display: none; z-index: 200; font-family: "Alice", serif; letter-spacing: 1px; flex-direction: column; align-items: center; }',
+        '.quote-block::before { content: ""; display: block; width: 600px; height: 200px; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 1s; background: purple url("https://n3tman.github.io/scripts/pergament.png") no-repeat center; }',
+        '.quote-block button { border: 0; background: transparent; cursor: pointer; padding: 0; font-size: 15px; }',
         '.quote-block ul.texts { padding: 0; margin: 0; }',
-        '.quote-block .content { display: flex; flex-direction: column; align-items: center; justify-content: center; height: calc(100% - 70px); padding: 0 20px; overflow: hidden; }',
-        '.quote-block .title { font-size: 40px; line-height: 40px; font-style: italic; font-weight: bold; color: #fefefe; letter-spacing: 6px; background: #0d480f url("https://n3tman.github.io/scripts/handmade-paper.png"); padding: 10px 20px; border-radius: 5px; }',
-        '.quote-block .author { text-align: center; font-size: 50px; font-weight: bold; letter-spacing: 3px; border-bottom: 2px solid rgba(255,255,255,0.3); display: none; background: rgba(126, 70, 15, 0.8) url("https://n3tman.github.io/scripts/handmade-paper.png"); width: 80%; padding: 10px; border-radius: 10px 10px 0 0; }',
-        '.quote-block .tlt { text-align: center; font-size: 40px; list-style-type: none; width: 80%; padding: 10px; border-radius: 0 0 10px 10px; background: rgba(126, 70, 15, 0.8) url("https://n3tman.github.io/scripts/handmade-paper.png"); opacity: 0; }',
+        '.quote-block .content { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: calc(100% - 10px); padding: 0; overflow: hidden; z-index: 10; }',
+        '.quote-block .author { text-align: center; font-size: 30px; width: 100%; box-sizing: border-box; font-weight: bold; letter-spacing: 5px; border-bottom: 2px solid rgba(255,255,255,0.3); display: none; padding: 3px; border-radius: 10px 10px 0 0; }',
+        '.quote-block .tlt { text-align: center; font-size: 32px; line-height: 1; padding: 3px; width: 100%; box-sizing: border-box; list-style-type: none; border-radius: 0 0 10px 10px; opacity: 0; }',
+        '.quote-block.active::before { opacity: 1; }',
+        '.quote-block.active .author, .quote-block.active .tlt { color: black; border-bottom: none; padding: 0 20px; }',
+        '.quote-block.active .content { margin: 21px 0; }',
         '.quote-block .text { list-style-type: none; }',
-        '.quote-counter { font-size: 45px; font-style: italic; background: #0d480f url("https://n3tman.github.io/scripts/handmade-paper.png"); padding: 5px 10px 5px 20px; border-radius: 5px; }',
-        '.quote-counter .counter { font-weight: bold; margin-left: 5px; width: 120px; display: inline-block; }',
-        '.quote-close { position: absolute; top: 3px; right: 0; font-size: 20px; }',
-        '.quote-refresh { position: absolute; top: 3px; left: 0; font-size: 20px; }',
+        '.quote-refresh { position: absolute; bottom: 22px; right: 2px; opacity: 0.1; }',
         '.my-alert { background: linear-gradient(270deg, #ff4a15, #0d480f) !important; background-size: 400% 400% !important; animation: MyAlert 2s ease infinite; }',
         '@keyframes MyAlert { 0% {background-position: 0% 50%} 50% {background-position: 100% 50%} 100% {background-position: 0% 50%} }'
     ].join('\n');
@@ -93,6 +93,7 @@ function updateQuote(phrase, notify) {
     $tlt.fadeTo('slow', 1);
 
     if (!notify) {
+        $block.addClass('active');
         $author.removeClass('my-alert');
         $tlt.removeClass('my-alert');
         $counter.removeClass('my-alert');
@@ -121,6 +122,7 @@ function updateQuote(phrase, notify) {
     } else {
         lampSound.play();
 
+        $block.removeClass('active');
         $author.addClass('my-alert');
         $tlt.addClass('my-alert');
         $counter.addClass('my-alert');
@@ -156,10 +158,10 @@ function bindArrive() {
 }
 
 $(function () {
-    var quoteBlock = '<div class="quote-block"><div class="title">﴾ МИНУТА СЛАВЫ ﴿</div><div class="content"><div class="author"></div>' +
+    var quoteBlock = '<div class="quote-block"><div class="content"><div class="author"></div>' +
         '<div class="tlt"><ul class="texts"><li class="text"></li></ul></div></div>' +
-        '<button class="quote-close" title="Закрыть">❌</button><button class="quote-refresh" title="Обновить">🔄</button>' +
-        '<div class="quote-counter">Цитата через <span class="counter">10:00</span></div></div>';
+        '<button class="quote-refresh" title="Обновить">🔄</button>' +
+        '</div>';
     $(quoteBlock).appendTo('body');
 
     var $topMessages = $('.yt-simple-endpoint.yt-dropdown-menu:eq(0) > .yt-dropdown-menu');
@@ -186,14 +188,16 @@ $(function () {
             if (count < notifyTime && !notified) {
                 updateQuote({
                     author: 'Скорей!',
-                    text: 'Пиши в чате стрима,<br>чтобы попасть сюда<br>(берется случайное сообщение из последних)'
+                    text: 'Пиши в чате стрима,<br>чтобы попасть сюда<br>(берется случайное сообщение<br>из последних)'
                 }, true);
                 notified = true;
             }
 
             if (count < 0) {
                 count = waitTime;
-                updateQuote(getRandomArrayValue(phraseArray));
+                if (phraseArray.length > 0) {
+                    updateQuote(getRandomArrayValue(phraseArray));
+                }
                 notified = false;
                 $topMessages.click();
                 document.unbindArrive();
@@ -205,14 +209,9 @@ $(function () {
         }, 1000);
     });
 
-    $('.quote-close').click(function () {
-        $block.fadeOut();
-        $block.find('.author').text('');
-        $block.find('.text').text('');
-        clearInterval(interval);
-    });
-
     $('.quote-refresh').click(function () {
-        updateQuote(getRandomArrayValue(phraseArray));
+        if (phraseArray.length > 0) {
+            updateQuote(getRandomArrayValue(phraseArray));
+        }
     });
 });
