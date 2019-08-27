@@ -151,7 +151,7 @@ function bindArrive() {
         var $this = $(this);
         var author = $this.find('#author-name').text().trim();
         var message = $this.find('#message').text().trim();
-        if (author && message.length > 10 && message.split(' ').length > 1) {
+        if (author && author != 'Nightbot' && message.length > 10 && message.split(' ').length > 1) {
             phraseArray.push({author: author, text: message});
         }
     });
